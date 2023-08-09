@@ -1,0 +1,31 @@
+<%= form_with(url: '/flights', method: :get) do |form| %>
+  <%= form.label :departure_airport_id, 'Departure Airport' %>
+  <%= form.select :departure_airport_id, options_from_collection_for_select(@airports, 'id', 'code') %>
+
+  <%= form.label :arrival_airport_id, 'Arrival Airport' %>
+  <%= form.select :arrival_airport_id, options_from_collection_for_select(@airports, 'id', 'code') %>
+
+  <%= form.label :passenger_count, 'Number of Passengers' %>
+  <%= form.select :passenger_count, options_for_select([1, 2, 3, 4]) %>
+
+  <%# <%= form.label :flight_date, 'Flight Date' %> 
+  <%# <%= form.select :flight_date, options_from_collection_for_select(@available_dates, :to_s, :to_s) %> 
+
+  <%= form.submit 'Search Flights' %>
+<% end %>
+
+
+
+<% if @available_flights.present? %>
+  <h2>Matching Flights</h2>
+  <%= form_with(url: '/', method: :get) do |form| %>
+    <% @available_flights.each do |flight| %>
+      <div>
+        <%= form.radio_button :selected_flight_id, flight.id %>
+        <%= flight.departure_airport.code %> to <%= flight.arrival_airport.code %> - <%= flight.start_datetime %>
+      </div>
+    <% end %>
+    <%= form.hidden_field :passenger_count, value: passenger_count %>
+    <%= form.submit 'Choose Flight' %>
+  <% end %>
+<% end %>

@@ -1,31 +1,51 @@
-<%= form_with(url: '/flights', method: :get) do |form| %>
-  <%= form.label :departure_airport_id, 'Departure Airport' %>
-  <%= form.select :departure_airport_id, options_from_collection_for_select(@airports, 'id', 'code') %>
+<%= form_with(url: '/flights', method: :get, class: 'form-container') do |form| %>
+  <%= form.label :departure_airport_id, 'Departure Airport', class: 'form-label' %>
+  <%= form.select :departure_airport_id, options_from_collection_for_select(@airports, 'id', 'code'), class: 'form-select' %>
 
-  <%= form.label :arrival_airport_id, 'Arrival Airport' %>
-  <%= form.select :arrival_airport_id, options_from_collection_for_select(@airports, 'id', 'code') %>
+  <%= form.label :arrival_airport_id, 'Arrival Airport', class: 'form-label' %>
+  <%= form.select :arrival_airport_id, options_from_collection_for_select(@airports, 'id', 'code'), class: 'form-select' %>
 
-  <%= form.label :passenger_count, 'Number of Passengers' %>
-  <%= form.select :passenger_count, options_for_select([1, 2, 3, 4]) %>
+  <%= form.label :passenger_count, 'Number of Passengers', class: 'form-label' %>
+  <%= form.select :passenger_count, options_for_select([1, 2, 3, 4]), class: 'form-select' %>
 
-  <%# <%= form.label :flight_date, 'Flight Date' %> 
-  <%# <%= form.select :flight_date, options_from_collection_for_select(@available_dates, :to_s, :to_s) %> 
-
-  <%= form.submit 'Search Flights' %>
+  <%= form.label :flight_date, 'Flight Date', class: 'form-label' %>
+  <%= form.select :flight_date, options_from_collection_for_select(@available_dates, :to_s, :to_s), class: 'form-select' %>
+  <%= form.submit 'Search Flights', class: 'form-submit' %>
 <% end %>
 
 
 
-<% if @available_flights.present? %>
-  <h2>Matching Flights</h2>
-  <%= form_with(url: '/', method: :get) do |form| %>
-    <% @available_flights.each do |flight| %>
-      <div>
-        <%= form.radio_button :selected_flight_id, flight.id %>
-        <%= flight.departure_airport.code %> to <%= flight.arrival_airport.code %> - <%= flight.start_datetime %>
-      </div>
-    <% end %>
-    <%= form.hidden_field :passenger_count, value: passenger_count %>
-    <%= form.submit 'Choose Flight' %>
-  <% end %>
-<% end %>
+<%# <% if @available_flights.present? %> 
+  <h2>Available Flights</h2>
+  <table>
+    <thead>
+      <tr>
+        <%# <th>Select</th> %>
+        <th>Departure Airport</th>
+        <th>Arrival Airport</th>
+        <th>Start Datetime</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @flights.each do |flight| %>
+        <tr>
+          <%# <td>
+            <%# <%= radio_button_tag 'selected_flight_id', flight.id %> 
+          <%# </td>  %>
+          <td><%= flight.departure_airport.code %></td>
+          <td><%= flight.arrival_airport.code %></td>
+          <td><%= flight.start_datetime %></td>
+          <td><%= link_to "Book The Flight", new_booking_path(selected_flight_id: flight.id,
+          departure_airport_id: flight.departure_airport_id,
+          arrival_airport_id: flight.arrival_airport_id,
+          flight_date: flight.start_datetime,
+          passenger_count: params[:passenger_count]) %></td>
+
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%# <%= hidden_field_tag 'passenger_count', passenger_count %> 
+  
+<%# <% end %>
+

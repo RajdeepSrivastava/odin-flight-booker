@@ -15,20 +15,20 @@ airport_code4 = Airport.create(code: "jkl")
 
 
 Flight.create(
-    departure_airport: airport_code1,
-    arrival_airport: airport_code2,
+    departure_airport_id: airport_code1,
+    arrival_airport_id: airport_code2,
     start_datetime: Date.today,
     flight_duration: 6 
 )
 Flight.create(
-    departure_airport: airport_code2,
-    arrival_airport: airport_code3,
+    departure_airport_id: airport_code2,
+    arrival_airport_id: airport_code3,
     start_datetime: Date.today,
     flight_duration: 3 
 )
 Flight.create(
-    departure_airport: airport_code3,
-    arrival_airport: airport_code4,
+    departure_airport_id: airport_code3,
+    arrival_airport_id: airport_code4,
     start_datetime: Date.today,
     flight_duration: 5 
 )

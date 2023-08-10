@@ -1,0 +1,15 @@
+<h2>Confirm Your Booking</h2>
+
+<%= form_with(model: @booking, url: bookings_path, method: :post) do |form| %>
+  <%= form.hidden_field :flight_id, value: @flight.id %>
+  <%= form.hidden_field :departure_airport_id, value: @departure_airport_id %>
+  <%= form.hidden_field :arrival_airport_id, value: @arrival_airport_id %>
+  <%= form.hidden_field :flight_date, value: @flight_date %>
+  <%= form.hidden_field :passenger_count, value: @passenger_count %>
+
+  <p>Flight: <%= @flight.departure_airport.code %> to <%= @flight.arrival_airport.code %></p>
+  <p>Departure: <%= @flight.start_datetime %></p>
+  <p>Passenger Count: <%= @passenger_count %></p>
+
+  <%= form.submit 'Confirm Booking' %>
+<% end %>

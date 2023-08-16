@@ -9,6 +9,8 @@ class FlightsController < ApplicationController
       arrival_airport_id = params[:arrival_airport_id]
       flight_date = params[:flight_date]
       passenger_count = params[:passenger_count].to_i
+
+  @passenger_count = params[:passenger_count].to_i
 # debugger
       # puts "departure_airport_id: #{departure_airport_id}"
       # puts "arrival_airport_id: #{arrival_airport_id}"
